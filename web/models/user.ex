@@ -25,7 +25,6 @@ defmodule Trelloclone.User do
     |> validate_length(:password, min: 6)
     |> validate_confirmation(:password, message: "Password does not match")
     |> unique_constraint(:email, message: "Email already taken")
-    |> validate_required([:name, :email, :encrypted_password])
     |> generate_encrypted_password
   end
 
