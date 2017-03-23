@@ -5,7 +5,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
 
 function join(dest) { return path.resolve(__dirname, dest); }
-function web(dest)  { return join('web/static' + dest); }
+function web(dest)  { return join('web/static/' + dest); }
 
 var config = module.exports = {
     entry: {
