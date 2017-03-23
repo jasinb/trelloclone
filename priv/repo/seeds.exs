@@ -9,3 +9,15 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias Trelloclone.{Repo, User}
+
+[
+  %{
+    name: "John Doe",
+    email: "john@gmail.com",
+    password: "supersecure"
+  }
+]
+|> Enum.map(&User.changeset(%User{}, &1))
+|> Enum.each(&Repo.insert!(&1))
