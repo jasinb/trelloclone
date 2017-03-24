@@ -13,6 +13,10 @@ defmodule Trelloclone.Board do
   @required_fields ~w(name user_id)
   @optional_fields ~w()
 
+  def preload_all(query) do
+    from b in query, preload: [:user]
+  end
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
 
