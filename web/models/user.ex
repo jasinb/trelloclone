@@ -7,6 +7,8 @@ defmodule Trelloclone.User do
     field :encrypted_password, :string
     field :password, :string, virtual: true
 
+    has_many :owned_boards, Trelloclone.Board
+
     timestamps()
   end
 

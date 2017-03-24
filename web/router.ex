@@ -25,13 +25,15 @@ defmodule Trelloclone.Router do
       delete "/sessions", SessionController, :delete
 
       get "/current_user", CurrentUserController, :show
+
+      resources "/boards", BoardController, only: [:index, :create]
     end
   end
 
   scope "/", Trelloclone do
     pipe_through :browser # Use the default browser stack
 
-    get "*path", PageController, :index
+    get "/*path", PageController, :index
   end
 
   # Other scopes may use custom stacks.
