@@ -7,6 +7,9 @@ defmodule Trelloclone.Board do
     field :name, :string
     belongs_to :user, Trelloclone.User
 
+    has_many :user_boards, UserBoard
+    has_many :members, through: [:user_boards, :user]
+
     timestamps()
   end
 
@@ -14,7 +17,7 @@ defmodule Trelloclone.Board do
   @optional_fields ~w()
 
   def preload_all(query) do
-    from b in query, preload: [:user]
+    from b in query, preload: [:user, :members]
   end
 
   @doc """

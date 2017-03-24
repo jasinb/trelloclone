@@ -17,7 +17,7 @@ export default (
             <IndexRoute component={HomeIndexView} />
 
             <Route path="boards/:id" component={BoardsShowView}>
-                <Route path="cards/:id" component={BoardsShowView} />
+                <Route path="cards/:id" component={CardsShowView} />
             </Route>
         </Route>
     </Route>

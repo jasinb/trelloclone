@@ -3,7 +3,7 @@ defmodule Trelloclone.BoardController do
 
   plug Guardian.Plug.EnsureAuthenticated, handler: Trelloclone.SessionController
 
-  alias Trelloclone.{Repo, Board}
+  alias Trelloclone.{Repo, Board, UserBoard}
 
   def index(conn, _params) do
     current_user = Guardian.Plug.current_resource(conn)
@@ -23,15 +23,20 @@ defmodule Trelloclone.BoardController do
     |> build_assoc(:owned_boards)
     |> Board.changeset(board_params)
 
-    case Repo.insert(changeset) do
-      {:ok, board} ->
-        conn
-        |> put_status(:created)
-        |> render("show.json", board: board)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render("error.json", changeset: changeset)
+    if changeset.valid? do
+      board = Repo.insert!(changeset)
+
+      board
+      |> build_assoc(:user_boards)
+      |> UserBoard.changeset(%{user_id: current_user.id})
+
+      conn
+      |> put_status(:created)
+      |> render("show.json", board: board)
+    else
+      conn
+      |> put_status(:unprocessable_entity)
+      |> render("error.json", changeset: changeset)
     end
   end
 end

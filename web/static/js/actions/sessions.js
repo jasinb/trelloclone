@@ -9,6 +9,13 @@ function setCurrentUser(dispatch, user)
         type: Constants.CURRENT_USER,
         currentUser: user
     });
+
+    channel.on('boards:add', (msg) => {
+        dispatch({
+            type: Constants.BOARDS_ADDED,
+            board: msg.board
+        });
+    });
 }
 
 const Actions = {
